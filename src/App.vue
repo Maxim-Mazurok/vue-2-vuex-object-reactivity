@@ -1,28 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>object.initialProperty = "{{ object.initialProperty }}"</h1>
+    <button @click="chageInitialProperty">change object.initialProperty</button>
+
+    <h1>object.newProperty = "{{ object.newProperty }}"</h1>
+    <button @click="chageNewProperty">change object.newProperty</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import store from "./store";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  computed: {
+    object: () => store.state.object,
+  },
+  methods: {
+    chageInitialProperty: () =>
+      store.dispatch("onSetObjectProperty", {
+        prop: "initialProperty",
+        val: new Date().toISOString(),
+      }),
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+    chageNewProperty: () =>
+      store.dispatch("onSetObjectProperty", {
+        prop: "newProperty",
+        val: new Date().toISOString(),
+      }),
+  },
+};
+</script>
